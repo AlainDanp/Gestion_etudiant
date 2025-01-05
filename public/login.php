@@ -31,12 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'email' => $user['email'],
                 'role' => $user['role'],
             ];
-
             // Redirection en fonction du rôle
             if ($user['role'] === 'admin') {
-                header('Location:  public/dashboard_admin.php');
+                header('Location: dashboard_admin.php');
             } else {
-                header('Location: public/dashboard.php');
+                header('Location: dashboard.php');
             }
             exit();
         } else {
@@ -45,7 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -61,7 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="drop"></div>
             <div class="content">
                 <h1>Connexion</h1>
-
                 <?php if ($error): ?>
                     <p class="error"><?= htmlspecialchars($error) ?></p>
                 <?php endif; ?>
