@@ -3,128 +3,148 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 $user = $_SESSION['user'] ?? null;
+$role = $user['role'] ?? 'guest';
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/navbar.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
 </head>
 <body>
-<div class="header">
-    <nav class="nav container">
-        <div class="nav__data">
-            <a href="#" class="nav__logo">
-                <i class="ri-planet-line"></i> KeYcE TP
-            </a>
-
-            <div class="nav__toggle" id="nav-toggle">
-                <i class="ri-menu-line nav__burger"></i>
-                <i class="ri-close-line nav__close"></i>
+<nav class="sidebar close">
+    <header>
+        <div class="image-text">
+            <span class="image">
+                <img src="assets/images/keyce.jpg" alt="Keyce">
+            </span>
+            <div class="text header-text">
+                <span class="name">Keyce</span>
+                <span class="profession">Academy</span>
             </div>
         </div>
+        <i class="bx bx-chevron-right toggle"></i>
+    </header>
+    <div class="menu-bar">
+        <div class="menu">
+            <li class="search-box">
+                <i class="bx bx-search icon"></i>
+                <input type="search" placeholder="Recherche...">
+            </li>
+            <ul class="menu-links">
+                <li class="nav-links">
+                    <a href="#">
+                        <i class="bx bx-home-alt icon"></i>
+                        <span class="text nav-text">Accueil</span>
+                    </a>
+                </li>
 
-        <div class="nav__menu" id="nav-menu">
-            <ul class="nav__list">
-                <li><a href="#" class="nav__link">Accueil (Dashboard)</a></li>
-                <!-- Section pour l'admin uniquement -->
-                <?php if ($user && $user['role'] === 'admin'): ?>
-                    <li><a href="#" class="nav__link">Statistiques</a></li>
-                    <li class="dropdown__item">
-                        <div class="nav__link">
-                            Gestion <i class="ri-arrow-down-s-line dropdown__arrow"></i>
-                        </div>
-
-                        <ul class="dropdown__menu">
-                            <li>
-                                <a href="#" class="dropdown__link">
-                                    <i class="ri-pie-chart-line"></i> Étudiants
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="dropdown__link">
-                                    <i class="ri-arrow-up-down-line"></i> Classes
-                                </a>
-                            </li>
-                        </ul>
+                <!-- Liens spécifiques aux étudiants -->
+                <?php if ($role === 'etudiant'): ?>
+                    <li class="nav-links">
+                        <a href="#">
+                            <i class="bx bxs-book-alt icon"></i>
+                            <span class="text nav-text">Mes Cours</span>
+                        </a>
                     </li>
-                    <li class="dropdown__item">
-                        <div class="nav__link">
-                            Organisation  <i class="ri-arrow-down-s-line dropdown__arrow"></i>
-                        </div>
-
-                        <ul class="dropdown__menu">
-                            <li>
-                                <a href="#" class="dropdown__link">
-                                    <i class="ri-arrow-up-down-line"></i> Cours
-                                </a>
-                            </li>
-                            <li class="dropdown__subitem">
-                                <div class="dropdown__link">
-                                    <i class="ri-bar-chart-line"></i> Element <i class="ri-add-line dropdown__add"></i>
-                                </div>
-
-                                <ul class="dropdown__submenu">
-                                    <li>
-                                        <a href="#" class="dropdown__sublink">
-                                            <i class="ri-file-list-line"></i> Documents
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a href="#" class="dropdown__sublink">
-                                            <i class="ri-cash-line"></i> Payments
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+                    <li class="nav-links">
+                        <a href="#">
+                            <i class="bx bxs-graduation icon"></i>
+                            <span class="text nav-text">Mes Notes</span>
+                        </a>
                     </li>
-
+                    <li class="nav-links">
+                        <a href="#">
+                            <i class="bx bxs-user icon"></i>
+                            <span class="text nav-text">Profil</span>
+                        </a>
+                    </li>
+                    <li class="nav-links">
+                        <a href="#">
+                            <i class="bx bxl-shopify icon"></i>
+                            <span class="text nav-text">Calendrier</span>
+                        </a>
+                    </li>
                 <?php endif; ?>
 
-                <!-- Section pour les étudiants uniquement -->
-                <?php if ($user && $user['role'] === 'etudiant'): ?>
-                    <li><a href="#" class="nav__link">Mes Cours</a></li>
-                    <li><a href="#" class="nav__link">Mes Notes</a></li>
-                <?php endif; ?>
-
-                <!-- Section pour tous les utilisateurs connectés -->
-                <?php if ($user): ?>
-                    <li><a href="#" class="nav__link">Profil</a></li>
-                    <li class="dropdown__item">
-                        <div class="nav__link">
-                            Compte <i class="ri-arrow-down-s-line dropdown__arrow"></i>
-                        </div>
-
-                        <ul class="dropdown__menu">
-                            <li>
-                                <a href="#" class="dropdown__link">
-                                    <i class="ri-notification-3-line"></i> Notification
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="dropdown__link">
-                                    <i class="ri-message-2-line"></i> Message
-                                </a>
-                            </li>
-                            <li>
-                                <a href="logout.php" class="dropdown__link">
-                                    <i class="ri-logout-box-line"></i> Déconnexion
-                                </a>
-                            </li>
-                        </ul>
+                <!-- Liens spécifiques aux admins -->
+                <?php if ($role === 'admin'): ?>
+                    <li class="nav-links">
+                        <a href="#">
+                            <i class="bx bxs-group icon"></i>
+                            <span class="text nav-text">Gérer Étudiants</span>
+                        </a>
                     </li>
-                <?php else: ?>
-                    <li><a href="login.php" class="nav__link">Connexion</a></li>
+                    <li class="nav-links">
+                        <a href="#">
+                            <i class="bx bxs-book-alt icon"></i>
+                            <span class="text nav-text">Gérer Cours  </span>
+                        </a>
+                    </li>
+                    <li class="nav-links">
+                        <a href="#">
+                            <i class="bx bxs-report icon"></i>
+                            <span class="text nav-text">Rapports</span>
+                        </a>
+                    </li>
+                    <li class="nav-links">
+                        <a href="#">
+                            <i class="bx bxs-folder icon"></i>
+                            <span class="text nav-text">Ressources</span>
+                        </a>
+                    </li>
+                    <li class="nav-links">
+                        <a href="#">
+                            <i class='bx bxs-message-alt-detail icon'></i>
+                            <span class="text nav-text">Boîte à Idées </span>
+                        </a>
+                    </li>
                 <?php endif; ?>
+
+                <!-- Liens communs -->
+                <li class="nav-links">
+                    <a href="#">
+                        <i class='bx bxs-wrench icon'></i>
+                        <span class="text nav-text">Options</span>
+                    </a>
+                </li>
+                <li class="nav-links">
+                    <a href="#">
+                        <i class='bx bxs-bell icon'></i>
+                        <span class="text nav-text">Notifications</span>
+                    </a>
+                </li>
             </ul>
         </div>
-    </nav>
-</div>
+        <div class="bottom-content">
+            <li class="nav-links">
+                <a href="logout.php">
+                    <i class='bx bx-log-out icon'></i>
+                    <span class="text nav-text">Déconnexion</span>
+                </a>
+            </li>
+            <li class="mode">
+                <div class="moon-sun">
+                    <i class='bx bx-moon icon moon'></i>
+                    <i class='bx bx-sun icon sun'></i>
+                </div>
+                <span class="mode-text text">Mode Nuit</span>
+                <div class="toggle-switch">
+                    <span class="switch"></span>
+                </div>
+            </li>
+        </div>
+    </div>
+</nav>
+<section class="home">
+    <?php
+    include 'etudiant.php';
+    ?>
+</section>
 
-<script src="assets/js/main.js"></script>
+<script src="assets/js/Dashboard.js"></script>
 </body>
 </html>

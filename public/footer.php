@@ -9,7 +9,7 @@ $user = $_SESSION['user'] ?? null;
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="assets/css/footer.css" rel="stylesheet">
+    <link href="assets/css/dashboard.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width , initial-scale=1.0">
     <link href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -45,7 +45,10 @@ $user = $_SESSION['user'] ?? null;
                 </div>
             </div>
         </div>
-        <img src="assets/images/cesiog.jpeg" class="logox">
+        <div class="logox">
+            <img src="assets/images/keyce2.png">
+        </div>
+
     </div>
 </footer>
 </body>
